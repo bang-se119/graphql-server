@@ -5,27 +5,12 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import bodyParser from 'body-parser';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
+import { resolvers } from './resolvers/index.js'
+import { typeDefs } from './schemas/index.js'
 
 const app = express();
 const httpServer = http.createServer(app);
 
-// as document in order to description (Query / Mutation / Subscription)
-// # Điểm đầu tiên từ phía client truy vấn dữ liệu lên phía server đều phải đi qua 3 thằng này
-const typeDefs = `#graphql
-    type Query {
-        name: String
-    }
-`;
-
-// as block handling data from client
-const resolvers = {
-    Query: {
-        name: () => { return 'Cosmetic' }
-    }
-};
-
-// schema
-// resolver
 const server = new ApolloServer({
     typeDefs,
     resolvers,
